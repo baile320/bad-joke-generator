@@ -32,20 +32,23 @@ const generateRandomJoke = () => {
   const question = [];
   let word = firstWords[Math.floor(Math.random() * firstWords.length)];
 
-  while (word !== '?') {
+  while (word !== '?' && question.length < 10) {
     question.push(word);
+    console.log(word)
     word = assignWordFromWeights(questionModel[word]);
   }
 
   // generate punchline
   const punchline = [];
   word = firstPunchlineWord[Math.floor(Math.random() * firstPunchlineWord.length)];
-
-  while (word !== '.' && word !== '!') {
+  while (word !== '.' || word !== '!' && punchline.length < 10) {
+    punchline.length;
     punchline.push(word);
+    if (word === '.' || word === '!') break;
     word = assignWordFromWeights(punchlineModel[word]);
   }
   return `${question.join(' ')}? ${punchline.join(' ')}`;
 };
 
+console.log(generateRandomJoke());
 module.exports = generateRandomJoke;
