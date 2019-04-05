@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+const _ = require('lodash');
 
 class Joke extends Component {
   constructor(props) {
@@ -10,6 +10,7 @@ class Joke extends Component {
       _id: '',
     };
     this.getNewJoke = this.getNewJoke.bind(this);
+    this.getNewJokeDebounce = _.throttle(this.getNewJoke, 250);
   }
   
   async componentDidMount() {
@@ -35,7 +36,7 @@ class Joke extends Component {
         <div className="container">
         <div className="row">
           <div className="col-sm">
-          <div onClick={this.getNewJoke} className="text-primary a" style={{cursor: "pointer"}}>
+          <div onClick={this.getNewJokeDebounce} className="text-primary a" style={{cursor: "pointer"}}>
             <i className="fas fa-sync-alt"></i> Get New Joke
           </div>
           </div>

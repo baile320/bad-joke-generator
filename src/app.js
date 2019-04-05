@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
 const path = require('path');
+const morgan = require('morgan');
 
 const generateRandomJoke = require('./utils/generateRandomJoke');
 const RandomJoke = require('./database/models/RandomJoke');
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(`${__dirname}/../client/dist`)));
+app.use(morgan('dev'))
 
 app.get('/api', (req, res) => {
   const newJoke = generateRandomJoke();
