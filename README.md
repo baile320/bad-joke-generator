@@ -1,6 +1,15 @@
 ## Introduction
 This app is a random joke generator. It uses jokes scraped from icanhazdadjoke.com to create a markov chain, and uses the probabilities from that chain to generate new jokes.
 
+### App Structure
+  - /client: Contains the React app.
+  - /src: Contains the Express API server.
+    - /src/database: Contains the DB connection.
+      -/src/database/models: Contains the DB schema & helper methods.
+    - /src/utils:
+      *.json: The parsed data used to build the markov chain.
+      *.js: The helper methods and functions used to scrape, aggregate, analyze, and generate the markov chain.
+
 ### Requirements
 MongoDB, node/npm
 
