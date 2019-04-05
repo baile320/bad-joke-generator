@@ -9,7 +9,8 @@
   },
   "keywords": [
     "markov chain",
-    "node"
+    "node",
+    "joke generator"
   ],
   "author": "Tyler Bailey",
   "license": "ISC",
