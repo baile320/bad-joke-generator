@@ -10,16 +10,11 @@ class Joke extends Component {
       _id: '',
     };
     this.getNewJoke = this.getNewJoke.bind(this);
-    this.getExistingJoke = this.getExistingJoke.bind(this);
   }
   
   async componentDidMount() {
     try {
-      if (this.props.match.params._id) {
-        await this.getExistingJoke();
-      } else {
-        await this.getNewJoke();
-      }
+      await this.getNewJoke();
     } catch (e) {
       console.log(e);
     }
@@ -28,12 +23,6 @@ class Joke extends Component {
   async getNewJoke() {
     const { data } = await axios.get(`http://127.0.0.1:3000/api/`)
     this.props.history.push(`/${data._id}`);
-    await this.setState({ ...data });
-  }
-
-  async getExistingJoke() {
-    const _id = this.props.match.params._id || '';
-    const { data } = await axios.get(`http://127.0.0.1:3000/api/${_id}`)
     await this.setState({ ...data });
   }
 
@@ -49,11 +38,6 @@ class Joke extends Component {
           <div onClick={this.getNewJoke} className="text-primary a" style={{cursor: "pointer"}}>
             <i className="fas fa-sync-alt"></i> Get New Joke
           </div>
-          </div>
-          <div className="col-sm">
-          <Link to={`/${this.state._id}`}>
-            <i className="fas fa-link"></i> Permalink
-          </Link>
           </div>
           <div className="col-sm">
             <a target="_blank" rel="noopener noreferrer" href={`https://twitter.com/intent/tweet?url=http://127.0.0.1:3000%2F${this.state._id}&amp;text=Check+out+this+%23badjoke&amp;`}>
