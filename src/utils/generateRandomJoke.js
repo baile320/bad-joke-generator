@@ -34,7 +34,6 @@ const generateRandomJoke = () => {
 
   while (word !== '?' && question.length < 10) {
     question.push(word);
-    console.log(word)
     word = assignWordFromWeights(questionModel[word]);
   }
 
@@ -50,5 +49,4 @@ const generateRandomJoke = () => {
   return `${question.join(' ')}? ${punchline.join(' ')}`;
 };
 
-console.log(generateRandomJoke());
 module.exports = generateRandomJoke;
