@@ -18,7 +18,7 @@ const assignWordFromWeights = (wordWeights) => {
       return keys[i];
     }
   }
-}
+};
 
 const generateRandomJoke = () => {
   const firstWords = JSON.parse(fs.readFileSync(`${__dirname}/firstWords.json`));
@@ -46,4 +46,4 @@ const generateRandomJoke = () => {
   return `${question.join(' ')}? ${punchline.join(' ')}`;
 };
 
-module.exports = generateRandomJoke();
+module.exports = generateRandomJoke;
