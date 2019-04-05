@@ -12,13 +12,14 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.static('./client/build'))
 app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(`${__dirname}/../client/dist`)));
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   const newJoke = generateRandomJoke();
   RandomJoke
     .save({ joke: newJoke })
@@ -26,7 +27,7 @@ app.get('/', (req, res) => {
     .catch(err => console.log(err));
 });
 
-app.get('/:jokeId', (req, res) => {
+app.get('/api/:jokeId', (req, res) => {
   const { jokeId } = req.params;
   RandomJoke
     .lookup(jokeId)
