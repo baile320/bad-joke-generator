@@ -1,5 +1,7 @@
+/* eslint-disable no-restricted-syntax */
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
+const _ = require('lodash');
 
 const readData = () => {
   const jokeData = fs.readFileSync(`${__dirname}/jokes.json`, 'utf8');
@@ -36,7 +38,19 @@ const saveFirstWordAfterQuestionMark = async () => {
   }
 };
 
-const parseJoke = (joke, storage = {}) => {
+const normalizeModelWeights = (model) => {
+  const normalizedModel = {};
+  const keys = Object.keys(model);
+  for (const key of keys) {
+    const totalOccurences = _.reduce(model[key], (sum, curr) => sum + curr);
+    
+    const nextWordKeys = Object.keys(model[key]);
+    normalizedModel[key] = {};
+    for (const nextKey of nextWordKeys) {
+      normalizedModel[key][nextKey] = model[key][nextKey] / totalOccurences;
+    }
+  }
+  return normalizedModel;
 };
 
 /*
@@ -95,8 +109,8 @@ const trainModel = async () => {
   } catch (e) {
     console.log(e);
   }
-  fs.writeFileSync(`${__dirname}/questionModel.json`, JSON.stringify(questionModel));
-  fs.writeFileSync(`${__dirname}/punchlineModel.json`, JSON.stringify(punchlineModel));
+  fs.writeFileSync(`${__dirname}/questionModel.json`, JSON.stringify(normalizeModelWeights(questionModel)));
+  fs.writeFileSync(`${__dirname}/punchlineModel.json`, JSON.stringify(normalizeModelWeights(punchlineModel)));
 };
 
 trainModel();
