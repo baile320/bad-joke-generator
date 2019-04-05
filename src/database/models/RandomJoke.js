@@ -11,9 +11,7 @@ const save = (joke) => {
   return RandomJoke.create(jokeToSave);
 };
 
-const lookup = jokeId => {
-  return RandomJoke.findById(jokeId);
-}
+const lookup = jokeId => RandomJoke.findById(jokeId);
 
 module.exports.RandomJoke = RandomJoke;
 module.exports.randomJokeSchema = randomJokeSchema;
