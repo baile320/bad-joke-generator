@@ -19,5 +19,8 @@ To build the react bundle, run `npm run build` from the client directory.
 To start the local server, run `npm run start-dev` from the root directory.
 Navigate to the localhost webpage (defaults to http://127.0.0.1:3000).
 
+### Tests
+A few simple tests have been added to make sure the API is working and that a couple aspects of the model training and generation are working. They can be run by using `npm test`.
+
 ### Example
 ![A gif of the app in action](https://i.imgur.com/5cxSAkv.gif)

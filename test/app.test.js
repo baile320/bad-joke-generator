@@ -12,7 +12,7 @@ describe('Express server should route properly', () => {
     console.log(`Connected to Express on port ${PORT}`);
     db;
   });
-  
+
   it('serves the client directory', (done) => {
     request(app)
       .get('/')
