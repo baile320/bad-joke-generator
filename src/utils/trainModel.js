@@ -27,10 +27,19 @@ const saveFirstWordAfterQuestionMark = async () => {
   try {
     const jokes = readData();
     let firstWords = new Set();
+    const removePunc = /[.,;:’‘\r\n"]/g;
     // get the first word following a question mark, if a question contains a question mark
+    // trim it, remove punctuation, etc
     firstWords = jokes
       .filter(joke => joke.joke.includes('?'))
-      .map(joke => joke.joke.split('?')[1].split(' ')[0]);
+      .map((joke) => {
+        let firstWord = joke.joke.split('?')[1].split(' ')[1];
+        if (firstWord === undefined || firstWord === null || firstWord === '') {
+          return 'Because';
+        }
+        firstWord = firstWord.replace(removePunc, '').trim();
+        return firstWord;
+      });
     const result = fs.writeFileAsync(`${__dirname}/firstWordsAfterQuestionMark.json`, JSON.stringify(firstWords));
     return result;
   } catch (e) {
@@ -43,7 +52,7 @@ const normalizeModelWeights = (model) => {
   const keys = Object.keys(model);
   for (const key of keys) {
     const totalOccurences = _.reduce(model[key], (sum, curr) => sum + curr);
-    
+
     const nextWordKeys = Object.keys(model[key]);
     normalizedModel[key] = {};
     for (const nextKey of nextWordKeys) {
@@ -70,19 +79,23 @@ const trainModel = async () => {
   const questionModel = {};
   const punchlineModel = {};
   const removePunc = /[.,;:’‘\r\n]/g;
+  const removeExclPoint = /[!]/g;
 
   try {
-    const rawJokes = JSON.parse(await fs.readFileAsync(`${__dirname}/smallJokes.json`, 'utf8'));
+    const rawJokes = JSON.parse(await fs.readFileAsync(`${__dirname}/jokes.json`, 'utf8'));
     const jokes = rawJokes.map(rawJoke => rawJoke.joke);
     jokes.forEach((joke) => {
       // If joke has a question mark, split on that
       if (joke.includes('?')) {
         const [question, punchline] = joke.split('?');
         // generate the question model
-        const questionWords = question.replace(removePunc).split(' ');
+        const questionWords = question.replace(removePunc, '').split(' ');
         for (let i = 0; i < questionWords.length; i += 1) {
           const curr = questionWords[i];
           const next = questionWords[i + 1];
+          if (questionWords === '') {
+            continue;
+          }
           questionModel[curr] = questionModel[curr] || {};
           if (i === questionWords.length - 1) {
             questionModel[curr]['?'] = questionModel[curr]['?'] + 1 || 1;
@@ -92,11 +105,17 @@ const trainModel = async () => {
         }
 
         // generate the punchline model;
-        const punchlineWords = punchline.replace(removePunc).split(' ');
+        const punchlineWords = punchline
+          .replace(removePunc, '')
+          .replace(removeExclPoint, '.')
+          .split(' ');
 
         for (let i = 0; i < punchlineWords.length; i += 1) {
           const curr = punchlineWords[i];
           const next = punchlineWords[i + 1];
+          if (questionWords === '') {
+            continue;
+          }
           punchlineModel[curr] = punchlineModel[curr] || {};
           if (i === punchlineWords.length - 1) {
             punchlineModel[curr]['.'] = punchlineModel[curr]['.'] + 1 || 1;
@@ -113,4 +132,5 @@ const trainModel = async () => {
   fs.writeFileSync(`${__dirname}/punchlineModel.json`, JSON.stringify(normalizeModelWeights(punchlineModel)));
 };
 
+// saveFirstWordAfterQuestionMark();
 trainModel();
