@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 const dotenv = require('dotenv');
 const app = require('./app');
 const db = require('./database/index');

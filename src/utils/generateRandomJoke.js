@@ -7,17 +7,19 @@ const assignWordFromWeights = (wordWeights) => {
   for (let i = 0; i < keys.length; i += 1) {
     CDF[keys[i]] = 0;
     for (let j = 0; j <= i; j += 1) {
-      CDF[keys[i]] += wordWeights[keys[j]]
+      CDF[keys[i]] += wordWeights[keys[j]];
     }
   }
   // get random
   const rand = Math.random();
   // pick corresponding word
+  let picked;
   for (let i = 0; i < keys.length; i += 1) {
     if (rand < CDF[keys[i]]) {
-      return keys[i];
+      picked = keys[i];
     }
   }
+  return picked;
 };
 
 const generateRandomJoke = () => {

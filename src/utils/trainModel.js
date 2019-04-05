@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
@@ -9,6 +10,7 @@ const readData = () => {
   return jokes;
 };
 
+// eslint-disable-next-line no-unused-vars
 const saveFirstWord = async () => {
   try {
     const jokes = readData();
@@ -23,6 +25,7 @@ const saveFirstWord = async () => {
   }
 };
 
+// eslint-disable-next-line no-unused-vars
 const saveFirstWordAfterQuestionMark = async () => {
   try {
     const jokes = readData();
