@@ -31,7 +31,8 @@ app.get('/api/:jokeId', (req, res) => {
   const { jokeId } = req.params;
   RandomJoke
     .lookup(jokeId)
-    .then(joke => res.json(joke));
+    .then(joke => res.json(joke))
+    .catch(err => console.log(err));
 });
 
 module.exports = app;
