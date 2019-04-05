@@ -37,4 +37,8 @@ app.get('/api/:jokeId', (req, res) => {
     .catch(err => console.log(err));
 });
 
+app.all('*', (req, res) => {
+  res.sendStatus(404);
+});
+
 module.exports = app;

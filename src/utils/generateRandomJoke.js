@@ -41,7 +41,6 @@ const generateRandomJoke = () => {
   const punchline = [];
   word = firstPunchlineWord[Math.floor(Math.random() * firstPunchlineWord.length)];
   while (word !== '.' || word !== '!' && punchline.length < 10) {
-    punchline.length;
     punchline.push(word);
     if (word === '.' || word === '!') break;
     word = assignWordFromWeights(punchlineModel[word]);

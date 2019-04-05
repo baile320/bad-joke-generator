@@ -136,4 +136,6 @@ const trainModel = async () => {
 };
 
 // saveFirstWordAfterQuestionMark();
-trainModel();
+// trainModel();
+
+module.exports.normalizeModelWeights = normalizeModelWeights;
