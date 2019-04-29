@@ -1,4 +1,6 @@
 ## Introduction
+This app was a coding challenge from a job interview (I have permission to post it).
+
 This app is a random joke generator. It uses jokes scraped from icanhazdadjoke.com to create a markov chain, and uses the probabilities from that chain to generate new jokes.
 
 ### App Structure
